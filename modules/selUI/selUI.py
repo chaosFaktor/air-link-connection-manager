@@ -94,6 +94,17 @@ class SelectionMenu:
         if menu.sel-1>=0:
             menu.sel-=1
         return menu
+    
+    def update(menu, entr, title, options=defaultOptions):
+        menu.entrys=entr
+        menu.title=title
+        menu.seperator=options[0]
+        menu.selFlag=options[1]
+        menu.nullFlag=options[2]
+        menu.sel=options[3]
+        menu.subHeading=options[4]
+        menu.maxLen=options[5]
+        return menu
 
 
 
