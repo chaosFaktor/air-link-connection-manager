@@ -143,7 +143,6 @@ class SelectionMenu:
                 i=i[:15]
                 files[0].append(i+ '<folder>')
         return files
-
     
     def fileDialog(menu, selection=''):
         if menu.vcwd[-1] != '/':
@@ -157,12 +156,13 @@ class SelectionMenu:
         if len(files)+len(dirs)+1<menu.sel:
             menu.sel=len(files)+len(dirs)
         options[3]=menu.sel
-        
-
-
+    
         
         if selection != '':
-            if selection in dirs:
+            if selection == 'Choose this folder':
+            #   Directorys may be recognised by the '/'-char at the end of the returned string.
+                return menu.vcwd 
+            elif selection in dirs:
                 menu.vcwd+=(selection.replace('<folder>', '')).rstrip() +'/'
             elif selection in files:
                 return menu.vcwd+(selection.replace('<file>', '')).rstrip()
@@ -171,9 +171,7 @@ class SelectionMenu:
                 menu.vcwd=menu.vcwd.rsplit('/', 2)[0] +'/'
                 if menu.vcwd=='':
                     menu.vcwd='/'
-            elif selection == 'Choose this folder':
-            #   Directorys may be recognised by the '/'-char at the end of the returned string.
-                return menu.vcwd+menu.vcwd+(selection.replace('<folder>', '')).rstrip() +'/'
+            
             
 
             filesAndDirs=menu.scanvcwd()

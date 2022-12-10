@@ -1,0 +1,2 @@
+This script comes without any warranty and is meant to run in a secure and by the user controlled network, and before all other as a experimental programm to be used as a template, and further developed.
+
