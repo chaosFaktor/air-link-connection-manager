@@ -1,7 +1,8 @@
 import sys
+import os
 class os:
     flags=sys.argv
-
+    cwd=os.getcwd()
 
 
 

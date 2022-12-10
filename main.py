@@ -8,12 +8,12 @@ import os
 
 
 
-cui = [   ansi.RESET+'Willkommen zum Link Filesharing-Script!' + 15*' '+ banner.lgbtq[0],
-          'Bitte wähle eine der Optionen, um fortzufahren:' +7*' '+banner.lgbtq[1],
-          ' '*54+banner.lgbtq[2],
+cui = [   ansi.RESET+'Willkommen zum Link Filesharing-Script!' + 14*' '+ banner.lgbtq[0],
+          'Bitte wähle eine der Optionen, um fortzufahren:' +6*' '+banner.lgbtq[1],
+          ' '*53+banner.lgbtq[2],
           ]
     
-entr = ['Share over Bluetooth'+' '*32+banner.lgbtq[5],
+entr = ['Share over Bluetooth'+' '*31+banner.lgbtq[5],
         'Connect to Bluetooth',
         'Share over localnetwork']
         
@@ -23,7 +23,7 @@ curSelui=selUI.SelectionMenu.create(entr, '<t>')
 def mainloop():
     for i in cui:
         print(i)
-    print(curSelui.refresh().replace('<t>', ' '*54+banner.lgbtq[3]).replace('▄'*100, '▄'*30+' '*24+banner.lgbtq[4]))
+    print(curSelui.refresh().replace('<t>', ' '*53+banner.lgbtq[3]).replace('▄'*100, '▄'*30+' '*23+banner.lgbtq[4]))
     
     try:
         inp = uniKey.getch()

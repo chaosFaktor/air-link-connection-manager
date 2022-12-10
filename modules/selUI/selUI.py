@@ -62,7 +62,7 @@ class SelectionMenu:
     nulFlag = " "
     sel = 0
     subHeading = " "
-    maxLen = 70
+    maxLen = 60
 
 
     def __init__(self, entrys, title, seperator, selFlag, nullFlag, sel, subHeading, maxLen):
@@ -74,7 +74,10 @@ class SelectionMenu:
         self.sel = sel
         self. subHeading = subHeading
         self.maxLen = maxLen
-
+        try:
+            self.vcwd = os.getcwd()
+        except:
+            pass
 
 
 
@@ -83,6 +86,9 @@ class SelectionMenu:
 
 
         return SelectionMenu(entr, title, options[0], options[1], options[2], options[3], options[4], options[5])
+
+    def getOpt(menu):
+        return [menu.seperator, menu.selFlag, menu.nulFlag, menu.sel, menu.subHeading, menu.maxLen]
 
     def selUp(menu):
         if menu.sel+1<len(menu.entrys):
@@ -122,12 +128,111 @@ class SelectionMenu:
         return menu.entrys[menu.sel]
 
 
+    def scanvcwd(menu):
+    #   files as variable name instead of folders and files, since 'Directory' is a file type
+        files=[[], []]
+        for i in os.listdir(menu.vcwd):        
+            if os.path.isfile(menu.vcwd+i):
+                if len(i)<15:
+                    i+=' '*(15-len(i))
+                i=i[:15]
+                files[1].append(i+'<file>')
+            else:
+                if len(i)<15:
+                    i+=' '*(15-len(i))
+                i=i[:15]
+                files[0].append(i+ '<folder>')
+        return files
+
+    
+    def fileDialog(menu, selection=''):
+        if menu.vcwd[-1] != '/':
+            menu.vcwd+='/'
+        options=menu.getOpt()
+        
+
+        filesAndDirs=menu.scanvcwd()
+        files=filesAndDirs[1]
+        dirs=filesAndDirs[0]
+        if len(files)+len(dirs)+1<menu.sel:
+            menu.sel=len(files)+len(dirs)
+        options[3]=menu.sel
+        
+
+
+        
+        if selection != '':
+            if selection in dirs:
+                menu.vcwd+=(selection.replace('<folder>', '')).rstrip() +'/'
+            elif selection in files:
+                return menu.vcwd+(selection.replace('<file>', '')).rstrip()
+            elif selection == '..':
+            #   shorten to the last entry of '/'
+                menu.vcwd=menu.vcwd.rsplit('/', 2)[0] +'/'
+                if menu.vcwd=='':
+                    menu.vcwd='/'
+            elif selection == 'Choose this folder':
+            #   Directorys may be recognised by the '/'-char at the end of the returned string.
+                return menu.vcwd+menu.vcwd+(selection.replace('<folder>', '')).rstrip() +'/'
+            
+
+            filesAndDirs=menu.scanvcwd()
+            files=filesAndDirs[1]
+            dirs=filesAndDirs[0]
+        
+        entr=dirs+files
+        entr.insert(0, '..')
+        entr.insert(1, 'Choose this folder')
+
+        menu.update(entr, menu.vcwd, options)
+        
+        
 
 
 
 
 
-##        Testing:
+######        Testing:
+
+
+
+##   Code Preset of using the SelectionMenu fileDialog
+'''
+import uniKey
+os.system('clear')
+mymen=SelectionMenu.create([], '')
+selection=''
+while True:
+    dialog = mymen.fileDialog(selection)
+    if dialog != None:
+        if dialog[-1]=='/':
+            print('returned folder: '+dialog)
+        else:
+            print('returned file: '+dialog)
+
+    selection=''
+    print(mymen.refresh())
+    print(mymen.vcwd)
+    try: inp=uniKey.getch()
+    except InterruptedError:
+        quit()
+    os.system('clear')
+    if inp in "sS2":
+        mymen.selUp()
+    elif inp in "wW8":
+        mymen.selDown()
+    elif inp in 'dD6 \n':
+        selection=mymen.select()
+'''
+    
+
+
+
+
+
+
+
+
 
 
 """
