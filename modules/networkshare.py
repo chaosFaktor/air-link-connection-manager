@@ -76,7 +76,10 @@ class localnetworkcfg:
         
         while True:
             print('Please select your password for symmetric encryption. The password should be at least 6 characters long, and contain numbers, lower- and uppercase letters, and special-characters')
-            inp = input('->')
+            inp = input('->')            
+            
+
+
             os.system('clear')
             print('Please re-enter your password')
             inpb = input('->')
@@ -88,19 +91,42 @@ class localnetworkcfg:
 
 
 
+def precon(cfg):
+    if cfg.pth[-1] == '/':  #   Directory
+        print('Detected Directory')
+    else:                   #   File
+        print('Detected file')
+    print('Creating compressed tar-archive')
+    if 'file.tar' in os.listdir(shared.os.cwd+'/wrk'):
+        os.remove(shared.os.cwd+'/wrk/file.tar')
+    os.system(shared.scripts.tar+' -i '+cfg.pth+' -o '+shared.os.cwd+'/wrk/file.tar')
+    print('Starting encryption')
+    os.system(shared.scripts)
+
 
 
 def run(cfg):
     os.system('clear')
-    if len(cfg.pswd)<6 | cfg.cypher=='none':
-        while True:
+    if (len(cfg.pswd)<6) | (cfg.cypher=='none'):
+        br=True
+        while br:
             print(ansi.Bold.RED+'Warning!!!  |  You entered an insecure password, or disabled encryption. This is highly inadvised, only continue if you know what you\'re doing!'+ansi.RESET)
             print('Enter YES to continue, or NO to quit')
             inp = input('->')
             if inp == 'YES':
-               break 
+               br = False
             elif inp == 'NO':
                 shared.escape()
 
-    if cfg.pth[-1] == '/':  #   Directory
 
+    os.system('clear')
+    print('Starting precon-sequence...')
+    try:
+        precon(cfg)
+    except Exeption as ex:
+        print(ansi.Bold.RED+'Exception: ', end='')
+        if hasattr(ex, 'message'):
+            print(ex.message, end='')
+        else:
+            print(ex, end='')
+        print('     | Escaping programm'+ansi.RESET)

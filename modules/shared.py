@@ -4,8 +4,6 @@ class os:
     flags=sys.argv
     cwd=os.getcwd()
 
-
-
     os=sys.platform
     is_linux = False
     is_windows = False
@@ -15,8 +13,11 @@ class os:
         is_windows=True
 
 class scripts:
-    tar = ''
+    tar = './scripts/tar.sh'
+    untar='./scripts/untar.sh'
 
 def escape():
     while True:
         exit()
+
+

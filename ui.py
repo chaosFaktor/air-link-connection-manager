@@ -72,6 +72,4 @@ def run_localnetwork():
     
 
 
-    import modules.networkshare as localshare
-    localshare.run()
 

@@ -50,5 +50,9 @@ def mainloop():
 
 os.system('clear')
 while True:
-    mainloop()
-    
+    try:
+        mainloop()
+    except KeyboardInterrupt:
+        shared.escape()
+    except InterruptedError:
+        shared.escape()
