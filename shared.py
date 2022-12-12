@@ -15,6 +15,7 @@ class os:
 class scripts:
     tar = './scripts/tar.sh'
     untar='./scripts/untar.sh'
+    enc='./scripts/'
 
 def escape():
     while True:

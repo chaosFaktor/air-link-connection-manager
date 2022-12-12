@@ -101,7 +101,7 @@ def precon(cfg):
         os.remove(shared.os.cwd+'/wrk/file.tar')
     os.system(shared.scripts.tar+' -i '+cfg.pth+' -o '+shared.os.cwd+'/wrk/file.tar')
     print('Starting encryption')
-    os.system(shared.scripts)
+    os.system(shared.scripts.enc)
 
 
 

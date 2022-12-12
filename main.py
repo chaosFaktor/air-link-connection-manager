@@ -25,10 +25,9 @@ def mainloop():
         print(i)
     print(curSelui.refresh().replace('<t>', ' '*53+banner.lgbtq[3]).replace('▄'*100, '▄'*30+' '*23+banner.lgbtq[4]))
     
-    try:
-        inp = uniKey.getch()
-    except InterruptedError:
-        shared.escape()
+    
+    inp = uniKey.getch()
+    
     if inp in 'wW8':
         curSelui.selDown()
     elif inp in 'sS2':
